@@ -1,0 +1,15 @@
+# DKIM
+gcloud dns record-sets create resend._domainkey.growthboostai.com. \
+  --zone=YOUR_ZONE --type=TXT --ttl=300 \
+  --rrdatas='"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu3MQE3sbSACcF2W7/5c2uBmho9RnZL8fIAfl+ADXzTrjgX3tvnwmtZfpBouMOmLQtC89O1YYo4sjr1gl/ulCsGVOlWeVamu3EcqonDkHfuA0cPXUXynyDuIrivupBwe9RvrwKnbEA+GOso6tnDi8xylt9XLElqlfNveq8+IM1sQIDAQAB"'
+
+# Receiving (only if you want inbound mail via Resend)
+gcloud dns record-sets create growthboostai.com. \
+  --zone=YOUR_ZONE --type=MX --ttl=300 \
+  --rrdatas='0 receive.forge.rmta.net.'
+
+# The two hostname records, if Resend says they're CNAMEs
+gcloud dns record-sets create rsend.growthboostai.com. \
+  --zone=YOUR_ZONE --type=CNAME --ttl=300 --rrdatas='rsend.forge.rmta.net.'
+gcloud dns record-sets create send.growthboostai.com. \
+  --zone=YOUR_ZONE --type=CNAME --ttl=300 --rrdatas='send.forge.rmta.net.'
